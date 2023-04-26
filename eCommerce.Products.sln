@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.Products.Persiste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.Products.API", "eCommerce.Products.API\eCommerce.Products.API.csproj", "{F9D1CC3D-76F0-470A-BB19-33A1A573E807}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.Products.Infrastructure", "eCommerce.Products.Infrastructure\eCommerce.Products.Infrastructure.csproj", "{FEB8AA54-DBD8-4AE5-8022-955005F43F22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.Products.Presentation", "eCommerce.Products.Presentation\eCommerce.Products.Presentation.csproj", "{010EBB82-D0E4-4D91-BC4C-1A6654265050}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{F9D1CC3D-76F0-470A-BB19-33A1A573E807}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9D1CC3D-76F0-470A-BB19-33A1A573E807}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9D1CC3D-76F0-470A-BB19-33A1A573E807}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEB8AA54-DBD8-4AE5-8022-955005F43F22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEB8AA54-DBD8-4AE5-8022-955005F43F22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEB8AA54-DBD8-4AE5-8022-955005F43F22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEB8AA54-DBD8-4AE5-8022-955005F43F22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{010EBB82-D0E4-4D91-BC4C-1A6654265050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{010EBB82-D0E4-4D91-BC4C-1A6654265050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{010EBB82-D0E4-4D91-BC4C-1A6654265050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{010EBB82-D0E4-4D91-BC4C-1A6654265050}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +55,8 @@ Global
 		{A7534FE4-3AEC-4E43-A3D5-57BABA60E046} = {F5AB1D02-D5FB-4498-AEDE-B758B7941DCC}
 		{0CDEDDEC-1467-46EF-91CC-439C7EABCFA1} = {F5AB1D02-D5FB-4498-AEDE-B758B7941DCC}
 		{666EC34E-915F-4BEC-905F-97F0D7317992} = {F5AB1D02-D5FB-4498-AEDE-B758B7941DCC}
+		{FEB8AA54-DBD8-4AE5-8022-955005F43F22} = {F5AB1D02-D5FB-4498-AEDE-B758B7941DCC}
+		{010EBB82-D0E4-4D91-BC4C-1A6654265050} = {F5AB1D02-D5FB-4498-AEDE-B758B7941DCC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EA1238BC-9C43-4EFC-810E-515932EAFB78}
