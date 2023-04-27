@@ -1,11 +1,11 @@
 ﻿using eCommerce.Products.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace eCommerce.Products.Persistence;
+namespace eCommerce.Products.Persistence.Context;
 
 public class ProductsDbContext : DbContext
 {
-    public DbSet<Product> Products { get; set; }
+    public DbSet<Entities> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<ProductCategory> ProductCategories { get; set; }
     public DbSet<ProductImage> ProductImages { get; set; }
@@ -43,7 +43,7 @@ public class ProductsDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Product>(entity =>
+        modelBuilder.Entity<Entities>(entity =>
         {
             entity.ToTable("products");
 
@@ -75,7 +75,7 @@ public class ProductsDbContext : DbContext
                 .WithMany(c => c.Products)
                 .UsingEntity<ProductCategory>(
                     l => l.HasOne<Category>().WithMany().HasForeignKey(e => e.CategoryId),
-                    r => r.HasOne<Product>().WithMany().HasForeignKey(e => e.ProductId)
+                    r => r.HasOne<Entities>().WithMany().HasForeignKey(e => e.ProductId)
                 );
         });
 
@@ -91,7 +91,7 @@ public class ProductsDbContext : DbContext
                 .HasMany(e => e.Products)
                 .WithMany(e => e.Categories)
                 .UsingEntity<ProductCategory>(
-                    l => l.HasOne<Product>().WithMany().HasForeignKey(e => e.ProductId),
+                    l => l.HasOne<Entities>().WithMany().HasForeignKey(e => e.ProductId),
                     r => r.HasOne<Category>().WithMany().HasForeignKey(e => e.CategoryId)
                 );
         });

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace eCommerce.Products.Persistence;
+namespace eCommerce.Products.Persistence.Context;
 
 public class ProductsDbContextFactory : IDesignTimeDbContextFactory<ProductsDbContext>
 {
