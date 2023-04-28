@@ -1,4 +1,6 @@
-﻿namespace eCommerce.Products.Domain.Shared;
+﻿using Newtonsoft.Json;
+
+namespace eCommerce.Products.Domain.Shared;
 
 public sealed class PaginateRequest
 {

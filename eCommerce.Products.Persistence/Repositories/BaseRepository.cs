@@ -1,6 +1,4 @@
-﻿using eCommerce.Products.Application.Extensions;
-using eCommerce.Products.Domain.Contracts.Repositories;
-using eCommerce.Products.Domain.Shared;
+﻿using eCommerce.Products.Domain.Contracts.Repositories;
 using eCommerce.Products.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -27,33 +25,9 @@ public class BaseRepository<T> : IRepository<T>
         return entity;
     }
 
-    public async Task<ICollection<T>> GetAllAsync(CancellationToken cancellationToken = default)
+    public IQueryable<T> GetAll(CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Set<T>().ToListAsync(cancellationToken);
-    }
-
-    public async Task<ICollection<T>> GetByCondition(
-        Expression<Func<T, bool>>? conditionExpression,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return conditionExpression is not null
-            ? await _dbContext.Set<T>().Where(conditionExpression).ToListAsync(cancellationToken)
-            : await _dbContext.Set<T>().ToListAsync(cancellationToken);
-    }
-
-    public async Task<IList<T>> GetPaginateReponseAsync(
-        PaginateRequest paginateRequest,
-        Expression<Func<T, bool>>? expression = default,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return expression is not null
-            ? await _dbContext
-                .Set<T>()
-                .Where(expression)
-                .PaginageListAsync(paginateRequest, cancellationToken)
-            : await _dbContext.Set<T>().PaginageListAsync(paginateRequest, cancellationToken);
+        return _dbContext.Set<T>().AsQueryable<T>();
     }
 
     public Task RemoveAsync(T entity)
@@ -67,5 +41,15 @@ public class BaseRepository<T> : IRepository<T>
     {
         _dbContext.Set<T>().Update(entity);
         return Task.FromResult(entity);
+    }
+
+    public async Task<ICollection<T>> GetByConditionAsync(
+        Expression<Func<T, bool>>? conditionExpression,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return conditionExpression is not null
+            ? await _dbContext.Set<T>().Where(conditionExpression).ToListAsync(cancellationToken)
+            : await _dbContext.Set<T>().ToListAsync(cancellationToken);
     }
 }

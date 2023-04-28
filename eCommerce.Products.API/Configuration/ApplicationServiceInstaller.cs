@@ -18,5 +18,7 @@ public sealed class ApplicationServiceInstaller : IServiceInstaller
             Application.AssemblyReference.Assembly,
             includeInternalTypes: true
         );
+
+        services.AddAutoMapper(Application.AssemblyReference.Assembly);
     }
 }

@@ -8,18 +8,12 @@ public interface IRepository<T>
     where T : class
 {
     DbSet<T> Entity { get; }
-    Task<ICollection<T>> GetAllAsync(CancellationToken cancellationToken = default);
-    Task<ICollection<T>> GetByCondition(
-        Expression<Func<T, bool>> conditionExpression,
+    IQueryable<T> GetAll(CancellationToken cancellationToken = default);
+    Task<ICollection<T>> GetByConditionAsync(
+        Expression<Func<T, bool>>? conditionExpression,
         CancellationToken cancellationToken = default
     );
     Task<T> AddAsync(T entity, CancellationToken cancellationToken = default);
     Task<T> UpdateAsync(T entity);
     Task RemoveAsync(T entity);
-
-    Task<IList<T>> GetPaginateReponseAsync(
-        PaginateRequest paginateRequest,
-        Expression<Func<T, bool>>? expression = default,
-        CancellationToken cancellationToken = default
-    );
 }

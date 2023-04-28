@@ -19,8 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Handlers\Query\" />
-    <Folder Include="Queries\" />
+    <Folder Include="Shared\" />
   </ItemGroup>
 
 </Project>
