@@ -24,6 +24,7 @@ public sealed class CreateProductCommandHandler
         var product = _mapper.Map<Product>(request);
 
         await _unitOfWork.Products.AddAsync(product, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return _mapper.Map<CreateProductResponse>(product);
     }

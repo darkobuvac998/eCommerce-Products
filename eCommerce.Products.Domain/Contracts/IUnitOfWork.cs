@@ -6,7 +6,7 @@ public interface IUnitOfWork
 {
     IProductRepository Products { get; }
 
-    Task SaveChangesAsync();
-    Task RollbackChangesAsync();
+    Task SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task RollbackChangesAsync(CancellationToken cancellationToken = default);
     Task DisposeAsync();
 }

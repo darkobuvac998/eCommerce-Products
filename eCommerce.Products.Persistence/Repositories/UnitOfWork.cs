@@ -20,7 +20,7 @@ public class UnitOfWork : IUnitOfWork
         await _dbContext.DisposeAsync();
     }
 
-    public async Task RollbackChangesAsync()
+    public async Task RollbackChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (
             var entry in _dbContext.ChangeTracker
@@ -35,14 +35,14 @@ public class UnitOfWork : IUnitOfWork
                     break;
                 case EntityState.Modified:
                 case EntityState.Deleted:
-                    await entry.ReloadAsync();
+                    await entry.ReloadAsync(cancellationToken);
                     break;
             }
         }
     }
 
-    public async Task SaveChangesAsync()
+    public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }
