@@ -11,4 +11,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\eCommerce.Products.Infrastructure\eCommerce.Products.Infrastructure.csproj" />
+    <ProjectReference Include="..\eCommerce.Products.Persistence\eCommerce.Products.Persistence.csproj" />
+    <ProjectReference Include="..\eCommerce.Products.Presentation\eCommerce.Products.Presentation.csproj" />
+  </ItemGroup>
+
 </Project>
