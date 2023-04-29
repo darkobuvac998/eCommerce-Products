@@ -10,10 +10,13 @@ public class UnitOfWork : IUnitOfWork
     private readonly ProductsDbContext _dbContext;
 
     private IProductRepository? _productRepository;
+    private ICategoryRepository? _categoryRepository;
 
     public UnitOfWork(ProductsDbContext dbContext) => _dbContext = (dbContext);
 
     public IProductRepository Products => _productRepository ??= new ProductRepository(_dbContext);
+    public ICategoryRepository Categories =>
+        _categoryRepository ??= new CategoryRepository(_dbContext);
 
     public async Task DisposeAsync()
     {

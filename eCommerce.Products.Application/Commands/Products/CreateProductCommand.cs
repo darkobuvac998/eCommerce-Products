@@ -10,7 +10,7 @@ public sealed record CreateProductCommand(
     string Description,
     JObject Characteristics,
     string UnitOfMeassure,
+    IList<string> Categories,
     double Price = default,
-    bool IsAvailable = true,
-    double Rating = default
+    bool IsAvailable = true
 ) : ICommand<CreateProductResponse>;

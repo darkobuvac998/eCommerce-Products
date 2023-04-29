@@ -4,6 +4,7 @@ using eCommerce.Products.Application.Commands.Products;
 using eCommerce.Products.Application.Responses.Products;
 using eCommerce.Products.Domain.Contracts;
 using eCommerce.Products.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Products.Application.Handlers.Command.Products;
 
@@ -22,6 +23,15 @@ public sealed class CreateProductCommandHandler
     )
     {
         var product = _mapper.Map<Product>(request);
+
+        if (request.Categories.Any())
+        {
+            var categories = await _unitOfWork.Categories.GetByConditionAsync(
+                c => request.Categories.Contains(c.Name)
+            );
+
+            product.Categories = await categories.ToListAsync();
+        }
 
         await _unitOfWork.Products.AddAsync(product, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

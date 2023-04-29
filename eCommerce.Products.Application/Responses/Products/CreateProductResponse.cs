@@ -13,4 +13,5 @@ public sealed class CreateProductResponse
     public double Price { get; set; }
     public bool IsAvailable { get; set; }
     public double Rating { get; set; }
+    public IList<string> Categories { get; set; }
 }

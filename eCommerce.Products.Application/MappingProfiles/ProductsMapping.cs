@@ -9,8 +9,16 @@ public sealed class ProductsMapping : Profile
 {
     public ProductsMapping()
     {
-        CreateMap<CreateProductCommand, Product>();
-        CreateMap<Product, CreateProductResponse>();
-        CreateMap<Product, GetProductResponse>();
+        CreateMap<CreateProductCommand, Product>().ForMember(x => x.Categories, m => m.Ignore());
+        CreateMap<Product, CreateProductResponse>()
+            .ForMember(
+                x => x.Categories,
+                m => m.MapFrom(x => x.Categories.Select(x => x.Name).ToList())
+            );
+        CreateMap<Product, GetProductResponse>()
+            .ForMember(
+                x => x.Categories,
+                m => m.MapFrom(x => x.Categories.Select(x => x.Name).ToList())
+            );
     }
 }

@@ -9,7 +9,7 @@ public class BaseRepository<T> : IRepository<T>
     where T : class
 {
     private DbSet<T>? _dbSet;
-    private readonly ProductsDbContext _dbContext;
+    protected readonly ProductsDbContext _dbContext;
 
     public BaseRepository(ProductsDbContext dbContext) => (_dbContext) = (dbContext);
 

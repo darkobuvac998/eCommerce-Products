@@ -24,12 +24,10 @@ public sealed class GetProductsQueryHandler
     {
         if (request.PaginateRequest is not null)
         {
-            var products = await _unitOfWork.Products.GetByConditionAsync(
+            var products = await _unitOfWork.Products.GetProductsWithCategoryAsync(
                 request.Expression,
                 cancellationToken
             );
-
-            //var query = (from products in _unitOfWork.Products.Entity select products);
 
             var paginateResult = await products.PaginageListAsync(
                 request.PaginateRequest,
