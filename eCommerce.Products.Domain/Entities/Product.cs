@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace eCommerce.Products.Domain.Entities;
 
@@ -12,9 +13,9 @@ public class Product : BaseEntity
     public string Code { get; set; }
 
     [MaxLength(500)]
-    public string Description { get; set; }
-    public string ProductCharacteristics { get; set; }
-    public string UnitOfMeasure { get; set; }
+    public string? Description { get; set; }
+    public JObject? Characteristics { get; set; }
+    public string? UnitOfMeassure { get; set; }
     public double Price { get; set; }
     public bool IsAvailable { get; set; }
     public double Rating { get; set; }

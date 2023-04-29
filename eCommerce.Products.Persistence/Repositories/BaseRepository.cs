@@ -43,13 +43,15 @@ public class BaseRepository<T> : IRepository<T>
         return Task.FromResult(entity);
     }
 
-    public async Task<ICollection<T>> GetByConditionAsync(
+    public Task<IQueryable<T>> GetByConditionAsync(
         Expression<Func<T, bool>>? conditionExpression,
         CancellationToken cancellationToken = default
     )
     {
-        return conditionExpression is not null
-            ? await _dbContext.Set<T>().Where(conditionExpression).ToListAsync(cancellationToken)
-            : await _dbContext.Set<T>().ToListAsync(cancellationToken);
+        return Task.FromResult(
+            conditionExpression is not null
+                ? _dbContext.Set<T>().Where(conditionExpression)
+                : _dbContext.Set<T>()
+        );
     }
 }

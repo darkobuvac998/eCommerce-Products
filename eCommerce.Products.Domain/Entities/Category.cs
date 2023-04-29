@@ -8,8 +8,11 @@ public class Category : BaseEntity
     [MaxLength(100)]
     public string Name { get; set; }
 
+    [Required]
+    public string Code { get; set; }
+
     [MaxLength(500)]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     public virtual ICollection<Product> Products { get; set; }
 }

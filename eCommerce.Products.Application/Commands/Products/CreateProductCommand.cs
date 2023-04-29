@@ -1,5 +1,6 @@
 ﻿using eCommerce.Products.Application.Abstractions.Commands;
 using eCommerce.Products.Application.Responses.Products;
+using Newtonsoft.Json.Linq;
 
 namespace eCommerce.Products.Application.Commands.Products;
 
@@ -7,7 +8,7 @@ public sealed record CreateProductCommand(
     string Name,
     string Code,
     string Description,
-    string Characteristics,
+    JObject Characteristics,
     string UnitOfMeassure,
     double Price = default,
     bool IsAvailable = true,

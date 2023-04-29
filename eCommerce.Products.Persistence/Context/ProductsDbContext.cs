@@ -1,5 +1,6 @@
 ﻿using eCommerce.Products.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace eCommerce.Products.Persistence.Context;
 
@@ -49,7 +50,7 @@ public class ProductsDbContext : DbContext
 
             entity.HasKey(e => e.Id);
 
-            entity.HasIndex(e => new { e.Id, e.Code }).IsUnique();
+            entity.HasIndex(e => e.Code).IsUnique();
 
             entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
 
@@ -57,7 +58,13 @@ public class ProductsDbContext : DbContext
 
             entity.Property(e => e.Description).HasMaxLength(500);
 
-            entity.Property(e => e.ProductCharacteristics).HasColumnType("jsonb");
+            entity
+                .Property(e => e.Characteristics)
+                .HasConversion(
+                    a => a.ToString(),
+                    b => !string.IsNullOrEmpty(b) ? JObject.Parse(b) : null
+                )
+                .HasColumnType("jsonb");
 
             entity
                 .HasMany(e => e.Images)
@@ -113,6 +120,12 @@ public class ProductsDbContext : DbContext
             entity.Property(e => e.UserId).IsRequired();
             entity.Property(e => e.Username).IsRequired();
             entity.Property(e => e.Review).HasMaxLength(500).IsRequired();
+        });
+
+        modelBuilder.Entity<ProductCategory>(entity =>
+        {
+            entity.HasKey(e => new { e.ProductId, e.CategoryId });
+            entity.Ignore(e => e.Id);
         });
     }
 }

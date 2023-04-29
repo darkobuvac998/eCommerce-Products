@@ -4,6 +4,7 @@ using eCommerce.Products.Application.Extensions;
 using eCommerce.Products.Application.Queries.Products;
 using eCommerce.Products.Application.Responses.Products;
 using eCommerce.Products.Domain.Contracts;
+using eCommerce.Products.Domain.Entities;
 
 namespace eCommerce.Products.Application.Handlers.Query.Products;
 
@@ -28,9 +29,14 @@ public sealed class GetProductsQueryHandler
                 cancellationToken
             );
 
-            return _mapper.Map<ICollection<GetProductResponse>>(
-                products.AsQueryable().PaginageListAsync(request.PaginateRequest, cancellationToken)
+            //var query = (from products in _unitOfWork.Products.Entity select products);
+
+            var paginateResult = await products.PaginageListAsync(
+                request.PaginateRequest,
+                cancellationToken
             );
+
+            return _mapper.Map<List<GetProductResponse>>(paginateResult);
         }
 
         return _mapper.Map<ICollection<GetProductResponse>>(

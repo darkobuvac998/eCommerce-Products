@@ -8,7 +8,6 @@ internal class PresentationMappingProfiles : Profile
 {
     public PresentationMappingProfiles()
     {
-        CreateMap<CreateProduct, CreateProductCommand>()
-            .ForMember(x => x.Characteristics, m => m.MapFrom(x => x.Characteristics.ToString()));
+        CreateMap<CreateProduct, CreateProductCommand>();
     }
 }

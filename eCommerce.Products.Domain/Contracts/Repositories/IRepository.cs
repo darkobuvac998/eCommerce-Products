@@ -1,5 +1,4 @@
-﻿using eCommerce.Products.Domain.Shared;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace eCommerce.Products.Domain.Contracts.Repositories;
@@ -9,7 +8,7 @@ public interface IRepository<T>
 {
     DbSet<T> Entity { get; }
     IQueryable<T> GetAll(CancellationToken cancellationToken = default);
-    Task<ICollection<T>> GetByConditionAsync(
+    Task<IQueryable<T>> GetByConditionAsync(
         Expression<Func<T, bool>>? conditionExpression,
         CancellationToken cancellationToken = default
     );

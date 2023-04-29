@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+
+  # ecommerce.products.api:
+  #   container_name: ecommerce_products
+  #   image: ${DOCKER_REGISTRY-}ecommerceproductsapi
+  #   build:
+  #     context: .
+  #     dockerfile: eCommerce.Products.API/Dockerfile
+
+  pgAdmin:
+    container_name: pg_admin
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=darko@dev.com
+      - PGADMIN_DEFAULT_PASSWORD=adm1n
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - ecommerce
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+
+
+  database:
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=adm1n
+      - PGDATA=/data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - ecommerce
+    restart: unless-stopped
+
+
+networks:
+  ecommerce:
+    driver: bridge
+
+volumes:
+  pgadmin-data:
+  postgres:

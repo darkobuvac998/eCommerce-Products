@@ -32,7 +32,7 @@ public sealed class ProductsController : ApiController
     {
         var command = Mapper.Map<CreateProductCommand>(request);
 
-        //var result = await Sender.Send(command);
-        return Ok(command);
+        var result = await Sender.Send(command);
+        return Ok(result);
     }
 }

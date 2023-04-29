@@ -9,11 +9,8 @@ public sealed class ProductsMapping : Profile
 {
     public ProductsMapping()
     {
-        CreateMap<CreateProductCommand, Product>()
-            .ForMember(x => x.ProductCharacteristics, m => m.MapFrom(p => p.Characteristics));
-        CreateMap<Product, CreateProductResponse>()
-            .ForMember(x => x.Characteristics, m => m.MapFrom(x => x.ProductCharacteristics));
-        CreateMap<Product, GetProductResponse>()
-            .ForMember(x => x.Characteristics, m => m.MapFrom(x => x.ProductCharacteristics));
+        CreateMap<CreateProductCommand, Product>();
+        CreateMap<Product, CreateProductResponse>();
+        CreateMap<Product, GetProductResponse>();
     }
 }
