@@ -8,10 +8,7 @@ public interface IRepository<T>
 {
     DbSet<T> Entity { get; }
     IQueryable<T> GetAll(CancellationToken cancellationToken = default);
-    Task<IQueryable<T>> GetByConditionAsync(
-        Expression<Func<T, bool>>? conditionExpression,
-        CancellationToken cancellationToken = default
-    );
+    IQueryable<T> GetByCondition(Expression<Func<T, bool>>? conditionExpression);
     Task<T> AddAsync(T entity, CancellationToken cancellationToken = default);
     Task<T> UpdateAsync(T entity);
     Task RemoveAsync(T entity);

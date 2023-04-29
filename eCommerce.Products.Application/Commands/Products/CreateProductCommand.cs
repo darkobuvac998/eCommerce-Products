@@ -13,4 +13,4 @@ public sealed record CreateProductCommand(
     IList<string> Categories,
     double Price = default,
     bool IsAvailable = true
-) : ICommand<CreateProductResponse>;
+) : ICommand<ProductResponse>;

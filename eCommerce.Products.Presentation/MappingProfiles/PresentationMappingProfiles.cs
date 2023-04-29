@@ -9,5 +9,6 @@ internal class PresentationMappingProfiles : Profile
     public PresentationMappingProfiles()
     {
         CreateMap<CreateProduct, CreateProductCommand>();
+        CreateMap<UpdateProduct, UpdateProductCommand>();
     }
 }

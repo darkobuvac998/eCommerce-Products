@@ -2,7 +2,7 @@
 
 namespace eCommerce.Products.Application.Responses.Products;
 
-public sealed class CreateProductResponse
+public class ProductResponse
 {
     public int Id { get; set; }
     public string Name { get; set; }

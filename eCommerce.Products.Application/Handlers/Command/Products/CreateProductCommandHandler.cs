@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace eCommerce.Products.Application.Handlers.Command.Products;
 
 public sealed class CreateProductCommandHandler
-    : ICommandHandler<CreateProductCommand, CreateProductResponse>
+    : ICommandHandler<CreateProductCommand, ProductResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -17,7 +17,7 @@ public sealed class CreateProductCommandHandler
     public CreateProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) =>
         (_unitOfWork, _mapper) = (unitOfWork, mapper);
 
-    public async Task<CreateProductResponse> Handle(
+    public async Task<ProductResponse> Handle(
         CreateProductCommand request,
         CancellationToken cancellationToken
     )
@@ -26,7 +26,7 @@ public sealed class CreateProductCommandHandler
 
         if (request.Categories.Any())
         {
-            var categories = await _unitOfWork.Categories.GetByConditionAsync(
+            var categories = _unitOfWork.Categories.GetByCondition(
                 c => request.Categories.Contains(c.Name)
             );
 
@@ -36,6 +36,6 @@ public sealed class CreateProductCommandHandler
         await _unitOfWork.Products.AddAsync(product, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return _mapper.Map<CreateProductResponse>(product);
+        return _mapper.Map<ProductResponse>(product);
     }
 }

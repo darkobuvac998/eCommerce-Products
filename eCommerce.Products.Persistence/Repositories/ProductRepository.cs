@@ -11,15 +11,12 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
     public ProductRepository(ProductsDbContext dbContext)
         : base(dbContext) { }
 
-    public Task<IQueryable<Product>> GetProductsWithCategoryAsync(
-        Expression<Func<Product, bool>>? expression,
-        CancellationToken cancellationToken
+    public IQueryable<Product> GetProductsWithCategories(
+        Expression<Func<Product, bool>>? expression = default
     )
     {
-        var query = expression is not null
+        return expression is not null
             ? _dbContext.Products.Include(p => p.Categories).Where(expression)
             : _dbContext.Products.Include(p => p.Categories);
-
-        return Task.FromResult(query);
     }
 }

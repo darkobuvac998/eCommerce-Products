@@ -16,7 +16,7 @@ public sealed class ProductsController : ApiController
 
     [HttpGet]
     public async Task<IActionResult> GetProductsAsync(
-        [FromQuery] PaginateRequest paginateRequest,
+        [FromQuery] PaginateRequest? paginateRequest,
         CancellationToken cancellationToken
     )
     {
@@ -31,6 +31,15 @@ public sealed class ProductsController : ApiController
     public async Task<IActionResult> CreateProductAsync([FromBody] CreateProduct request)
     {
         var command = Mapper.Map<CreateProductCommand>(request);
+
+        var result = await Sender.Send(command);
+        return Ok(result);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateProductAsync([FromBody] UpdateProduct request)
+    {
+        var command = Mapper.Map<UpdateProductCommand>(request);
 
         var result = await Sender.Send(command);
         return Ok(result);

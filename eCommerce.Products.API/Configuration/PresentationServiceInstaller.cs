@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Serialization;
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Serialization;
 
 namespace eCommerce.Products.API.Configuration;
 
@@ -21,6 +22,11 @@ public sealed class PresentationServiceInstaller : IServiceInstaller
         {
             opt.LowercaseUrls = true;
             opt.LowercaseQueryStrings = true;
+        });
+
+        services.Configure<MvcOptions>(opt =>
+        {
+            opt.AllowEmptyInputInBodyModelBinding = true;
         });
 
         services.AddSwaggerGen(conf =>

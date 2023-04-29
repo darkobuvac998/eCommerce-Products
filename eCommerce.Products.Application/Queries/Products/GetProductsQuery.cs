@@ -9,4 +9,4 @@ namespace eCommerce.Products.Application.Queries.Products;
 public sealed record GetProductsQuery(
     Expression<Func<Product, bool>>? Expression,
     PaginateRequest? PaginateRequest
-) : IQuery<ICollection<GetProductResponse>>;
+) : IQuery<ICollection<ProductResponse>>;
