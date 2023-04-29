@@ -5,6 +5,9 @@ using eCommerce.Products.Domain.Shared;
 using eCommerce.Products.Application.Commands.Products;
 using eCommerce.Products.Presentation.DTOs.Products;
 using AutoMapper;
+using eCommerce.Products.Application.Queries.ProductReviews;
+using eCommerce.Products.Presentation.DTOs.ProductReview;
+using eCommerce.Products.Application.Commands.ProductReviews;
 
 namespace eCommerce.Products.Presentation.Controllers;
 
@@ -71,6 +74,43 @@ public sealed class ProductsController : ApiController
     )
     {
         await Sender.Send(new DeleteProductCommand(id), cancellationToken);
+        return Ok();
+    }
+
+    [HttpGet("{id:int}/reviews")]
+    public async Task<IActionResult> GetProductReviews(
+        [FromRoute] int id,
+        CancellationToken cancellationToken
+    )
+    {
+        var command = new GetProductReviewsQuery(id);
+        var result = await Sender.Send(command, cancellationToken);
+
+        return Ok(result);
+    }
+
+    [HttpPost("{id:int}/reviews")]
+    public async Task<IActionResult> CreateProductReviewAsync(
+        [FromBody] CreateProductReview request,
+        [FromRoute] int id,
+        CancellationToken cancellationToken
+    )
+    {
+        request.ProductId = id;
+        var command = Mapper.Map<CreateProductReviewCommand>(request);
+        var result = await Sender.Send(command, cancellationToken);
+
+        return Ok(result);
+    }
+
+    [HttpDelete("{productId:int}/review/{reviewId:int}")]
+    public async Task<IActionResult> DeleteProductAsync(
+        [FromRoute] int productId,
+        [FromRoute] int reviewId,
+        CancellationToken cancellationToken
+    )
+    {
+        await Sender.Send(new DeleteProductReviewCommand(productId, reviewId), cancellationToken);
         return Ok();
     }
 }

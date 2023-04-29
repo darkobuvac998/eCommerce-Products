@@ -1,8 +1,6 @@
 ﻿using eCommerce.Products.Application.Commands.Products;
 using eCommerce.Products.Domain.Contracts;
-using eCommerce.Products.Domain.Entities;
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Products.Application.Validators.Products;
 

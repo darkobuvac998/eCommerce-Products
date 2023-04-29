@@ -1,14 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace eCommerce.Products.Application.Responses.Products;
+namespace eCommerce.Products.Application.Responses.ProductReviews;
 
 public sealed class ProductReviewResponse
 {
     public int Id { get; set; }
     public int ProductId { get; set; }
-    public string ProductCode { get; set; }
-    public string ProductName { get; set; }
-
     public int UserId { get; set; }
     public string Username { get; set; }
 

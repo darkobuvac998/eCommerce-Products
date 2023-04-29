@@ -11,13 +11,17 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
     public ProductRepository(ProductsDbContext dbContext)
         : base(dbContext) { }
 
-    public IQueryable<Product> GetProductsWithCategories(
+    public IQueryable<Product> GetProductsDetails(
         Expression<Func<Product, bool>>? expression = default
     )
     {
         return expression is not null
-            ? _dbContext.Products.Include(p => p.Categories).Where(expression)
-            : _dbContext.Products.Include(p => p.Categories);
+            ? _dbContext.Products
+                .Include(p => p.Categories)
+                .Include(x => x.Reviews)
+                .AsSplitQuery()
+                .Where(expression)
+            : _dbContext.Products.Include(p => p.Categories).Include(x => x.Reviews).AsSplitQuery();
     }
 
     public IQueryable<Product> GetProductWithReviews(int id)

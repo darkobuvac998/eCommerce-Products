@@ -24,7 +24,7 @@ public sealed class GetProductsQueryHandler
     {
         if (request.PaginateRequest is not null)
         {
-            var products = _unitOfWork.Products.GetProductsWithCategories(request.Expression);
+            var products = _unitOfWork.Products.GetProductsDetails(request.Expression);
 
             var paginateResult = await products.PaginageListAsync(
                 request.PaginateRequest,
@@ -35,7 +35,7 @@ public sealed class GetProductsQueryHandler
         }
 
         return _mapper.Map<ICollection<ProductResponse>>(
-            await _unitOfWork.Products.GetProductsWithCategories(request.Expression).ToListAsync()
+            await _unitOfWork.Products.GetProductsDetails(request.Expression).ToListAsync()
         );
     }
 }
