@@ -19,4 +19,9 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
             ? _dbContext.Products.Include(p => p.Categories).Where(expression)
             : _dbContext.Products.Include(p => p.Categories);
     }
+
+    public IQueryable<Product> GetProductWithReviews(int id)
+    {
+        return _dbContext.Products.Include(p => p.Reviews).Where(p => p.Id == id);
+    }
 }

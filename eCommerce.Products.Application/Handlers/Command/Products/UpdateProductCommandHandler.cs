@@ -39,7 +39,7 @@ public sealed class UpdateProductCommandHandler
         }
 
         await _unitOfWork.Products.UpdateAsync(product);
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return _mapper.Map<ProductResponse>(product);
     }

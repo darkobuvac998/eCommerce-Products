@@ -1,6 +1,6 @@
-﻿using eCommerce.Products.Domain.Shared;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
+using Newtonsoft.Json.Linq;
 
 namespace eCommerce.Products.Application.Behaviors;
 
@@ -34,25 +34,19 @@ public class ValidationPipelineBehavior<TRequest, TResposne>
         var errors = validationTasks
             .SelectMany(validationResult => validationResult.Errors)
             .Where(x => x is not null)
-            .Select(failure => new Error(failure.PropertyName, failure.ErrorMessage))
-            .Distinct()
-            .ToArray();
+            .GroupBy(
+                x => x.PropertyName,
+                x => x.ErrorMessage,
+                (propertyName, errorMessages) =>
+                    new { Key = propertyName, Values = errorMessages.Distinct().ToArray() }
+            )
+            .ToDictionary(x => x.Key, x => x.Values);
 
         if (errors.Any())
         {
-            return CreateValidationResult<TResposne>(errors);
+            throw new ValidationException(JObject.FromObject(errors).ToString());
         }
 
         return await next();
-    }
-
-    private static TResult CreateValidationResult<TResult>(Error[] errors)
-        where TResult : class
-    {
-        object validationResult = typeof(ValidationResult)
-            .GetMethod(nameof(ValidationResult.WithErrors))!
-            .Invoke(null, new object?[] { errors })!;
-
-        return (TResult)validationResult;
     }
 }
