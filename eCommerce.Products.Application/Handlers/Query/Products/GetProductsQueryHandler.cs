@@ -35,10 +35,7 @@ public sealed class GetProductsQueryHandler
             request.PaginateRequest?.ToString()
         );
 
-        var cachedProducts = await _cacheService.GetAllAsync<IList<Product>>(
-            key,
-            cancellationToken
-        );
+        var cachedProducts = await _cacheService.GetAsync<IList<Product>>(key, cancellationToken);
 
         if (cachedProducts != null && cachedProducts.Any())
         {

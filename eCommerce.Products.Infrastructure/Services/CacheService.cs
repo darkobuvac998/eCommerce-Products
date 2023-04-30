@@ -12,6 +12,7 @@ public sealed class CacheService : ICacheService
     private readonly IDistributedCache _distributedCache;
     private readonly RedisOptions? _redisOptions;
     private readonly DistributedCacheEntryOptions? _distributedCacheEntryOptions;
+    private readonly JsonSerializerSettings? _jsonSerializerSettings;
 
     public CacheService(IDistributedCache distributedCache, IOptions<RedisOptions> options)
     {
@@ -22,11 +23,17 @@ public sealed class CacheService : ICacheService
         }
         _distributedCacheEntryOptions = new DistributedCacheEntryOptions
         {
-            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(_redisOptions!.CacheExpiration)
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(_redisOptions!.CacheExpiration)
+        };
+        _jsonSerializerSettings = new JsonSerializerSettings
+        {
+            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
+            ContractResolver = new PrivateResolver(),
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
         };
     }
 
-    public async Task<T?> GetAllAsync<T>(string key, CancellationToken cancellationToken = default)
+    public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default)
     {
         var cachedResult = await _distributedCache.GetStringAsync(key, cancellationToken);
 
@@ -46,15 +53,7 @@ public sealed class CacheService : ICacheService
     {
         await _distributedCache.SetStringAsync(
             key,
-            JsonConvert.SerializeObject(
-                value,
-                new JsonSerializerSettings
-                {
-                    ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
-                    ContractResolver = new PrivateResolver(),
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                }
-            ),
+            JsonConvert.SerializeObject(value, _jsonSerializerSettings),
             _distributedCacheEntryOptions!,
             cancellationToken
         );
