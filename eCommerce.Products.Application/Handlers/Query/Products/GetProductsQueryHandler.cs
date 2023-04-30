@@ -57,7 +57,9 @@ public sealed class GetProductsQueryHandler
         }
 
         var result = _mapper.Map<ICollection<ProductResponse>>(
-            await _unitOfWork.Products.GetProductsDetails(request.Expression).ToListAsync()
+            await _unitOfWork.Products
+                .GetProductsDetails(request.Expression)
+                .ToListAsync(cancellationToken)
         );
 
         await _cacheService.SetAsync(key, result, cancellationToken);

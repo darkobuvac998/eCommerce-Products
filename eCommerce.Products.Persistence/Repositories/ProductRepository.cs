@@ -19,9 +19,8 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
             ? _dbContext.Products
                 .Include(p => p.Categories)
                 .Include(x => x.Reviews)
-                .AsSplitQuery()
                 .Where(expression)
-            : _dbContext.Products.Include(p => p.Categories).Include(x => x.Reviews).AsSplitQuery();
+            : _dbContext.Products.Include(p => p.Categories).Include(x => x.Reviews);
     }
 
     public IQueryable<Product> GetProductWithReviews(int id)

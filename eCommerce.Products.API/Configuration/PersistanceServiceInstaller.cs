@@ -13,7 +13,11 @@ public sealed class PersistanceServiceInstaller : IServiceInstaller
             options =>
                 options.UseNpgsql(
                     configuration.GetConnectionString("Db"),
-                    builder => builder.MigrationsAssembly("eCommerce.Products.Persistence")
+                    optionsBuilder =>
+                    {
+                        optionsBuilder.MigrationsAssembly("eCommerce.Products.Persistence");
+                        optionsBuilder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                    }
                 )
         );
 
