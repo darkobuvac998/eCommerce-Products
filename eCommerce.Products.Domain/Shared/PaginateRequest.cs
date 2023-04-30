@@ -21,4 +21,9 @@ public sealed class PaginateRequest
         get => _pageSize;
         set { _pageSize = value > _maxPageSize ? _maxPageSize : value; }
     }
+
+    public override string ToString()
+    {
+        return $"PageNumber:{_pageNumber} PageSize: {_pageSize}";
+    }
 }

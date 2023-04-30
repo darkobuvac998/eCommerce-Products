@@ -8,12 +8,14 @@ namespace eCommerce.Products.Persistence.Repositories;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly ProductsDbContext _dbContext;
-
     private IProductRepository? _productRepository;
     private ICategoryRepository? _categoryRepository;
     private IProductReviewRepository? _productReviewRepository;
 
-    public UnitOfWork(ProductsDbContext dbContext) => _dbContext = (dbContext);
+    public UnitOfWork(ProductsDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
 
     public IProductRepository Products => _productRepository ??= new ProductRepository(_dbContext);
     public ICategoryRepository Categories =>

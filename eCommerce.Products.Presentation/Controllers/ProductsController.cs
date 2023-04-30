@@ -23,7 +23,7 @@ public sealed class ProductsController : ApiController
         CancellationToken cancellationToken
     )
     {
-        var command = new GetProductsQuery(default, paginateRequest);
+        var command = new GetProductsQuery(default, paginateRequest ?? default);
 
         var result = await Sender.Send(command, cancellationToken);
 

@@ -8,5 +8,5 @@ namespace eCommerce.Products.Application.Queries.Products;
 
 public sealed record GetProductsQuery(
     Expression<Func<Product, bool>>? Expression,
-    PaginateRequest? PaginateRequest
+    PaginateRequest? PaginateRequest = default
 ) : IQuery<ICollection<ProductResponse>>;
