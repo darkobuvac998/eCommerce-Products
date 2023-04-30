@@ -1,19 +1,28 @@
 ﻿using eCommerce.Products.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
 namespace eCommerce.Products.Persistence.Context;
 
 public class ProductsDbContext : DbContext
 {
+    private readonly ILoggerFactory _loggerFactory;
+
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<ProductCategory> ProductCategories { get; set; }
     public DbSet<ProductImage> ProductImages { get; set; }
     public DbSet<ProductReview> ProductReviews { get; set; }
 
-    public ProductsDbContext(DbContextOptions<ProductsDbContext> options)
-        : base(options) { }
+    public ProductsDbContext(
+        DbContextOptions<ProductsDbContext> options,
+        ILoggerFactory loggerFactory
+    )
+        : base(options)
+    {
+        _loggerFactory = loggerFactory;
+    }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
@@ -37,7 +46,10 @@ public class ProductsDbContext : DbContext
     {
         base.OnConfiguring(optionsBuilder);
 
-        optionsBuilder.UseSnakeCaseNamingConvention();
+        optionsBuilder
+            .UseSnakeCaseNamingConvention()
+            .UseLoggerFactory(_loggerFactory)
+            .EnableSensitiveDataLogging(true);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

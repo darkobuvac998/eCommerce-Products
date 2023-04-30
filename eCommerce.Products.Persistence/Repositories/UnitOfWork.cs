@@ -24,11 +24,6 @@ public class UnitOfWork : IUnitOfWork
     public IProductReviewRepository ProductReviews =>
         _productReviewRepository ??= new ProductReviewRepository(_dbContext);
 
-    public async Task DisposeAsync()
-    {
-        await _dbContext.DisposeAsync();
-    }
-
     public async Task RollbackChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (

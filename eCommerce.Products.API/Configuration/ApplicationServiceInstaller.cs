@@ -13,6 +13,7 @@ public sealed class ApplicationServiceInstaller : IServiceInstaller
         );
 
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
 
         services.AddValidatorsFromAssembly(
             Application.AssemblyReference.Assembly,

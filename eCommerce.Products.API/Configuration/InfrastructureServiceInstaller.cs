@@ -11,7 +11,8 @@ public sealed class InfrastructureServiceInstaller : IServiceInstaller
         services
             .AddOptions<RedisOptions>()
             .Bind(configuration.GetSection(nameof(RedisOptions)))
-            .ValidateDataAnnotations();
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
 
         services.AddStackExchangeRedisCache(redisOptions =>
         {

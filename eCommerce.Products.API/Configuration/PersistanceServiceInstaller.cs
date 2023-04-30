@@ -9,16 +9,23 @@ public sealed class PersistanceServiceInstaller : IServiceInstaller
 {
     public void Install(IServiceCollection services, IConfiguration configuration)
     {
+        var provider = services.BuildServiceProvider();
+        var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
+
         services.AddDbContext<ProductsDbContext>(
             options =>
-                options.UseNpgsql(
-                    configuration.GetConnectionString("Db"),
-                    optionsBuilder =>
-                    {
-                        optionsBuilder.MigrationsAssembly("eCommerce.Products.Persistence");
-                        optionsBuilder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
-                    }
-                )
+                options
+                    .UseNpgsql(
+                        configuration.GetConnectionString("Db"),
+                        optionsBuilder =>
+                        {
+                            optionsBuilder
+                                .MigrationsAssembly("eCommerce.Products.Persistence")
+                                .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                        }
+                    )
+                    .EnableSensitiveDataLogging()
+                    .UseLoggerFactory(loggerFactory)
         );
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();

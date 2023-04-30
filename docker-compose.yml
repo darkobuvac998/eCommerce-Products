@@ -49,6 +49,15 @@ services:
     volumes:
       - cache:/data
 
+  seq:
+    container_name: seq_logging
+    image: datalust/seq:latest
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5341:80"
+    networks:
+      - ecommerce
 
 networks:
   ecommerce:
