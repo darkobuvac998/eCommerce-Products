@@ -43,5 +43,6 @@ public sealed class ProductsMapping : Profile
 
         CreateMap<CreateProductReviewCommand, ProductReview>();
         CreateMap<ProductReview, ProductReviewResponse>();
+        CreateMap<UpdateProductReviewCommand, ProductReview>();
     }
 }

@@ -37,6 +37,17 @@ services:
       - ecommerce
     restart: unless-stopped
 
+  # redis:
+  #   container_name: redis_cache
+  #   image: redis:6-alpine
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - ecommerce
+  #   restart: unless-stopped
+  #   volumes:
+  #     - cache:/data
+
 
 networks:
   ecommerce:
@@ -45,3 +56,5 @@ networks:
 volumes:
   pgadmin-data:
   postgres:
+  # cache:
+  #   driver: local

@@ -103,6 +103,23 @@ public sealed class ProductsController : ApiController
         return Ok(result);
     }
 
+    [HttpPut("{productId:int}/reviews/{reviewId:int}")]
+    public async Task<IActionResult> UpdateProductReviewAsync(
+        [FromBody] UpdateProductReview request,
+        int productId,
+        int reviewId,
+        CancellationToken cancellationToken
+    )
+    {
+        request.ProductId = productId;
+        request.ReviewId = reviewId;
+        var command = Mapper.Map<UpdateProductReviewCommand>(request);
+
+        var response = await Sender.Send(command, cancellationToken);
+
+        return Ok(response);
+    }
+
     [HttpDelete("{productId:int}/review/{reviewId:int}")]
     public async Task<IActionResult> DeleteProductAsync(
         [FromRoute] int productId,

@@ -13,5 +13,6 @@ internal class PresentationMappingProfiles : Profile
         CreateMap<CreateProduct, CreateProductCommand>();
         CreateMap<UpdateProduct, UpdateProductCommand>();
         CreateMap<CreateProductReview, CreateProductReviewCommand>();
+        CreateMap<UpdateProductReview, UpdateProductReviewCommand>();
     }
 }

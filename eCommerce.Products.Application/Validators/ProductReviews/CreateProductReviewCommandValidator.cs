@@ -22,7 +22,7 @@ public class CreateProductReviewCommandValidator : AbstractValidator<CreateProdu
                 {
                     var product = await _unitOfWork.Products
                         .GetByCondition(p => p.Id == id)
-                        .FirstOrDefaultAsync();
+                        .FirstOrDefaultAsync(cancellationToken);
 
                     return product is not null;
                 }
