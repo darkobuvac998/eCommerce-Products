@@ -23,7 +23,6 @@ services:
       - "5050:80"
     restart: unless-stopped
 
-
   database:
     environment:
       - POSTGRES_USER=postgres
@@ -56,6 +55,18 @@ services:
       - ACCEPT_EULA=Y
     ports:
       - "5341:80"
+    networks:
+      - ecommerce
+
+  ecommerceproducts:
+    container_name: ecommerceproducts
+    build:
+      network: host
+      context: ../eCommerce.Products
+      dockerfile: ./eCommerce.Products.API/Dockerfile
+    ports:
+      - "7099:443"
+      - "5102:80"
     networks:
       - ecommerce
 
