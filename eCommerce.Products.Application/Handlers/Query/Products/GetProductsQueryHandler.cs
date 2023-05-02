@@ -29,11 +29,7 @@ public sealed class GetProductsQueryHandler
         CancellationToken cancellationToken
     )
     {
-        var key = Utils.BuildCacheKey(
-            "products",
-            request.Expression?.ToString(),
-            request.PaginateRequest?.ToString()
-        );
+        var key = Utils.BuildCacheKey("products-all");
 
         var cachedProducts = await _cacheService.GetAsync<IList<Product>>(key, cancellationToken);
 
