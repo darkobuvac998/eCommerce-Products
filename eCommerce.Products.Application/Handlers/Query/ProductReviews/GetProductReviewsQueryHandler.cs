@@ -40,6 +40,7 @@ public class GetProductReviewsQueryHandler
 
         var reviews = await _unitOfWork.ProductReviews
             .GetByCondition(p => p.ProductId == request.ProductId)
+            .AsNoTracking()
             .ToListAsync();
 
         await _cacheService.SetAsync(key, reviews);

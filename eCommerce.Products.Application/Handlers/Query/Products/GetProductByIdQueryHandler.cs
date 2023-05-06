@@ -41,6 +41,7 @@ public sealed class GetProductByIdQueryHandler : IQueryHandler<GetProductByIdQue
             (
                 await _unitOfWork.Products
                     .GetProductsDetails(p => p.Id == request.Id)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync()
             ) ?? throw new ItemNotFoundException(typeof(Product), request.Id);
 

@@ -2,13 +2,6 @@ version: '3.7'
 
 services:
 
-  # ecommerce.products.api:
-  #   container_name: ecommerce_products
-  #   image: ${DOCKER_REGISTRY-}ecommerceproductsapi
-  #   build:
-  #     context: .
-  #     dockerfile: eCommerce.Products.API/Dockerfile
-
   pgAdmin:
     container_name: pg_admin
     image: dpage/pgadmin4:latest

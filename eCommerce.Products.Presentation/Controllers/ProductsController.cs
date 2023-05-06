@@ -8,9 +8,12 @@ using AutoMapper;
 using eCommerce.Products.Application.Queries.ProductReviews;
 using eCommerce.Products.Presentation.DTOs.ProductReview;
 using eCommerce.Products.Application.Commands.ProductReviews;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace eCommerce.Products.Presentation.Controllers;
 
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [Route("/api/[controller]")]
 public sealed class ProductsController : ApiController
 {
