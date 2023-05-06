@@ -15,4 +15,6 @@ public sealed class JwtOptions
 
     [Required]
     public int ExpirationTime { get; set; } = 1;
+
+    public string Authority { get; set; }
 }

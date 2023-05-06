@@ -69,6 +69,24 @@ services:
     volumes:
       - ~/.aspnet/https/:/https:ro
 
+  # ecommerceusers:
+  #   container_name: ecommerceusers
+  #   build:
+  #     context: ../eCommerce.Users.API
+  #     dockerfile: ./eCommerce.Users.API/Dockerfile
+  #   ports:
+  #     - "7252:443"
+  #     - "5096:80"
+  #   networks:
+  #     - ecommerce
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_URLS=https://+:443;http://+:80
+  #     - ASPNETCORE_Kestrel__Certificates__Default__Password=adm1n
+  #     - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+  #   volumes:
+  #     - ~/.aspnet/https/:/https:ro
+
 networks:
   ecommerce:
     driver: bridge

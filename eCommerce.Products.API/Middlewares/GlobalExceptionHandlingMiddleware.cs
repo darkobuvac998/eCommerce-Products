@@ -1,6 +1,7 @@
 ﻿using eCommerce.Products.Domain.Exceptions;
 using eCommerce.Products.Domain.Shared;
 using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 
 namespace eCommerce.Products.API.Middlewares;

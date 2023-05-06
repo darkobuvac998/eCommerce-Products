@@ -1,6 +1,10 @@
 ﻿using eCommerce.Products.API.Middlewares;
+using eCommerce.Products.API.Options;
 using eCommerce.Products.API.OptionsSetup;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace eCommerce.Products.API.Configuration;
 
@@ -9,10 +13,33 @@ public class WebApiServiceInstaller : IServiceInstaller
     public void Install(IServiceCollection services, IConfiguration configuration)
     {
         services.ConfigureOptions<JwtOptionsSetup>();
-        services.ConfigureOptions<JwtBearerOptionsSetup>();
 
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+        var provider = services.BuildServiceProvider();
+        var jwtOptions = provider.GetRequiredService<IOptions<JwtOptions>>().Value;
 
-        services.AddTransient<GlobalExceptionHandlingMiddleware>();
+        services
+            .AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                var key = Encoding.UTF8.GetBytes(jwtOptions.SecretKey);
+
+                options.TokenValidationParameters = new()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtOptions.Issuer,
+                    ValidAudience = jwtOptions.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
+            });
+
+        services.AddSingleton<GlobalExceptionHandlingMiddleware>();
     }
 }
