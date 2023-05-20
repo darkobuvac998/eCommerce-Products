@@ -24,7 +24,8 @@ public sealed class InfrastructureServiceInstaller : IServiceInstaller
         services.AddScoped<ICacheService, CacheService>();
 
         services.AddAuthorization();
-        services.AddSingleton<IAuthorizationHandler, PolicyAuthorizationHandler>();
+        //services.AddSingleton<IAuthorizationHandler, PolicyAuthorizationHandler>();
+        services.AddSingleton<IAuthorizationHandler, PolicyAuthorizationHandlerV2>();
         services.AddSingleton<IAuthorizationPolicyProvider, PolicyAuthorizationProvider>();
     }
 }
