@@ -19,6 +19,8 @@ public class PolicyAuthorizationHandler : AuthorizationHandler<PolicyRequirement
             return Task.CompletedTask;
         }
 
+        // Used when user permissiona are added to jwt as a
+        // permissions claim
         HashSet<string> permissions = context.User.Claims
             .Where(x => x.Type == "permissions")
             .Select(x => x.Value)

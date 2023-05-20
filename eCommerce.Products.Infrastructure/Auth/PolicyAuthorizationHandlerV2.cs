@@ -32,7 +32,7 @@ public class PolicyAuthorizationHandlerV2 : AuthorizationHandler<PolicyRequireme
 
         ICacheService cacheService = scope.ServiceProvider.GetRequiredService<ICacheService>();
 
-        var cacheKey = $"user-{userId}";
+        var cacheKey = $"user[permissions]-{userId}";
 
         // Fetching users permissions from Redis
         var permissions = await cacheService.GetAsync<HashSet<string>>(cacheKey);
