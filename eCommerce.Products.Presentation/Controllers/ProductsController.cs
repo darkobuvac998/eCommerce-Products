@@ -1,15 +1,16 @@
-﻿using eCommerce.Products.Application.Queries.Products;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using eCommerce.Products.Domain.Shared;
-using eCommerce.Products.Application.Commands.Products;
-using eCommerce.Products.Presentation.DTOs.Products;
-using AutoMapper;
-using eCommerce.Products.Application.Queries.ProductReviews;
-using eCommerce.Products.Presentation.DTOs.ProductReview;
+﻿using AutoMapper;
 using eCommerce.Products.Application.Commands.ProductReviews;
-using Microsoft.AspNetCore.Authorization;
+using eCommerce.Products.Application.Commands.Products;
+using eCommerce.Products.Application.Queries.ProductReviews;
+using eCommerce.Products.Application.Queries.Products;
+using eCommerce.Products.Domain.Shared;
+using eCommerce.Products.Infrastructure.Auth;
+using eCommerce.Products.Presentation.DTOs.ProductReview;
+using eCommerce.Products.Presentation.DTOs.Products;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Products.Presentation.Controllers;
 
@@ -20,6 +21,7 @@ public sealed class ProductsController : ApiController
     public ProductsController(ISender sender, IMapper mapper)
         : base(sender, mapper) { }
 
+    [HasPolicy(Policies.Products.View)]
     [HttpGet]
     public async Task<IActionResult> GetProductsAsync(
         [FromQuery] PaginateRequest? paginateRequest,
@@ -33,6 +35,7 @@ public sealed class ProductsController : ApiController
         return Ok(result);
     }
 
+    [HasPolicy(Policies.Products.View)]
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetProductByIdAsync(
         [FromRoute] int id,
@@ -46,6 +49,7 @@ public sealed class ProductsController : ApiController
         return Ok(result);
     }
 
+    [HasPolicy(Policies.Products.Add)]
     [HttpPost]
     public async Task<IActionResult> CreateProductAsync(
         [FromBody] CreateProduct request,
@@ -58,6 +62,7 @@ public sealed class ProductsController : ApiController
         return Ok(result);
     }
 
+    [HasPolicy(Policies.Products.Edit)]
     [HttpPut]
     public async Task<IActionResult> UpdateProductAsync(
         [FromBody] UpdateProduct request,
@@ -70,6 +75,7 @@ public sealed class ProductsController : ApiController
         return Ok(result);
     }
 
+    [HasPolicy(Policies.Products.Delete)]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteProductAsync(
         [FromRoute] int id,
@@ -80,6 +86,7 @@ public sealed class ProductsController : ApiController
         return Ok();
     }
 
+    [HasPolicy(Policies.ProductReviewes.View)]
     [HttpGet("{id:int}/reviews")]
     public async Task<IActionResult> GetProductReviews(
         [FromRoute] int id,
@@ -92,6 +99,7 @@ public sealed class ProductsController : ApiController
         return Ok(result);
     }
 
+    [HasPolicy(Policies.ProductReviewes.Add)]
     [HttpPost("{id:int}/reviews")]
     public async Task<IActionResult> CreateProductReviewAsync(
         [FromBody] CreateProductReview request,
@@ -106,6 +114,7 @@ public sealed class ProductsController : ApiController
         return Ok(result);
     }
 
+    [HasPolicy(Policies.ProductReviewes.Edit)]
     [HttpPut("{productId:int}/reviews/{reviewId:int}")]
     public async Task<IActionResult> UpdateProductReviewAsync(
         [FromBody] UpdateProductReview request,
@@ -123,6 +132,7 @@ public sealed class ProductsController : ApiController
         return Ok(response);
     }
 
+    [HasPolicy(Policies.ProductReviewes.Delete)]
     [HttpDelete("{productId:int}/review/{reviewId:int}")]
     public async Task<IActionResult> DeleteProductAsync(
         [FromRoute] int productId,

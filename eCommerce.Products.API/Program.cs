@@ -1,6 +1,5 @@
 using eCommerce.Products.API.Configuration;
 using eCommerce.Products.API.Middlewares;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
