@@ -6,5 +6,5 @@ public static class Scopes
     public const string View = "View";
     public const string Delete = "Delete";
     public const string Edit = "Edit";
-    public const string All = "All";
+    public const string AllScopes = "All";
 }

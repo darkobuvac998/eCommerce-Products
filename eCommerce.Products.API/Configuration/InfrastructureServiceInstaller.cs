@@ -1,6 +1,8 @@
 ﻿using eCommerce.Products.Domain.Contracts.Infrastructure;
+using eCommerce.Products.Infrastructure.Auth;
 using eCommerce.Products.Infrastructure.Options;
 using eCommerce.Products.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eCommerce.Products.API.Configuration;
 
@@ -20,5 +22,9 @@ public sealed class InfrastructureServiceInstaller : IServiceInstaller
         });
 
         services.AddScoped<ICacheService, CacheService>();
+
+        services.AddAuthorization();
+        services.AddSingleton<IAuthorizationHandler, PolicyAuthorizationHandler>();
+        services.AddSingleton<IAuthorizationPolicyProvider, PolicyAuthorizationProvider>();
     }
 }

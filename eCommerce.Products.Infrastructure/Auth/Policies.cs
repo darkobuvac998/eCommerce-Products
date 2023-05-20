@@ -4,7 +4,7 @@ public static class Policies
 {
     public static class Products
     {
-        public const string AllScopes = $"{Resources.Product}-{Scopes.All}";
+        public const string AllScopes = $"{Resources.Product}-{Scopes.AllScopes}";
         public const string View = $"{Resources.Product}-{Scopes.View}";
         public const string Add = $"{Resources.Product}-{Scopes.Add}";
         public const string Edit = $"{Resources.Product}-{Scopes.Edit}";
@@ -22,7 +22,7 @@ public static class Policies
 
     public static class Categories
     {
-        public const string AllScopes = $"{Resources.Category}-{Scopes.All}";
+        public const string AllScopes = $"{Resources.Category}-{Scopes.AllScopes}";
         public const string View = $"{Resources.Category}-{Scopes.View}";
         public const string Add = $"{Resources.Category}-{Scopes.Add}";
         public const string Edit = $"{Resources.Category}-{Scopes.Edit}";
@@ -40,7 +40,7 @@ public static class Policies
 
     public static class ProductReviewes
     {
-        public const string AllScopes = $"{Resources.ProductReview}-{Scopes.All}";
+        public const string AllScopes = $"{Resources.ProductReview}-{Scopes.AllScopes}";
         public const string View = $"{Resources.ProductReview}-{Scopes.View}";
         public const string Add = $"{Resources.ProductReview}-{Scopes.Add}";
         public const string Edit = $"{Resources.ProductReview}-{Scopes.Edit}";
@@ -56,7 +56,7 @@ public static class Policies
         };
     }
 
-    public static string[] All()
+    public static HashSet<string> All()
     {
         var policies = new string[][]
         {
@@ -66,7 +66,7 @@ public static class Policies
         }
             .SelectMany(p => p)
             .Distinct()
-            .ToArray();
+            .ToHashSet();
 
         return policies;
     }
