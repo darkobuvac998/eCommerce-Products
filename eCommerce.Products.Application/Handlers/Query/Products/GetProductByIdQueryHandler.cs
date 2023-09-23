@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using eCommerce.Products.Application.Abstractions;
 using eCommerce.Products.Application.Abstractions.Handlers;
+using eCommerce.Products.Application.Extensions;
 using eCommerce.Products.Application.Queries.Products;
 using eCommerce.Products.Application.Responses.Products;
 using eCommerce.Products.Application.Shared;
@@ -11,7 +13,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Products.Application.Handlers.Query.Products;
 
-public sealed class GetProductByIdQueryHandler : IQueryHandler<GetProductByIdQuery, ProductResponse>
+public sealed class GetProductByIdQueryHandler
+    : IQueryHandler<GetProductByIdQuery, Result<ProductResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -23,7 +26,7 @@ public sealed class GetProductByIdQueryHandler : IQueryHandler<GetProductByIdQue
         ICacheService cacheService
     ) => (_unitOfWork, _mapper, _cacheService) = (unitOfWork, mapper, cacheService);
 
-    public async Task<ProductResponse> Handle(
+    public async Task<Result<ProductResponse>> Handle(
         GetProductByIdQuery request,
         CancellationToken cancellationToken
     )
@@ -34,7 +37,7 @@ public sealed class GetProductByIdQueryHandler : IQueryHandler<GetProductByIdQue
 
         if (cachedProduct != null)
         {
-            return _mapper.Map<ProductResponse>(cachedProduct);
+            return Result.Ok(_mapper.Map<ProductResponse>(cachedProduct));
         }
 
         var product =
@@ -47,6 +50,6 @@ public sealed class GetProductByIdQueryHandler : IQueryHandler<GetProductByIdQue
 
         await _cacheService.SetAsync(key, product, cancellationToken);
 
-        return _mapper.Map<ProductResponse>(product);
+        return Result.Ok(_mapper.Map<ProductResponse>(cachedProduct));
     }
 }

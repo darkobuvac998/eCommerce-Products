@@ -42,5 +42,19 @@ public class WebApiServiceInstaller : IServiceInstaller
             });
 
         services.AddSingleton<GlobalExceptionHandlingMiddleware>();
+
+        services.AddCors(
+            opt =>
+                opt.AddPolicy(
+                    "CorsPolicy",
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                            .AllowAnyHeader();
+                    }
+                )
+        );
     }
 }

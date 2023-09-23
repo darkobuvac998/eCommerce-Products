@@ -28,6 +28,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
+
 app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
@@ -36,8 +38,10 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
+app.UseCors();
 
 app.MapControllers();
+
+app.MigrateDatabase();
 
 app.Run();

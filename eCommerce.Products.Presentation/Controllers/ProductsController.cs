@@ -46,6 +46,11 @@ public sealed class ProductsController : ApiController
 
         var result = await Sender.Send(command, cancellationToken);
 
+        if (result.IsFailure)
+        {
+            return BadRequest(result.Error);
+        }
+
         return Ok(result);
     }
 
